@@ -43,6 +43,10 @@ body {
     font-family: var(--fonte_padrao);
 }
 
+a.externo::after{
+    content: '\1F517';
+}
+
 header{
     background-image: linear-gradient(to bottom, var(--verde3), var(--verde5));
     min-height: 150px;
@@ -123,6 +127,11 @@ main p {
     line-height: 1.3em;
 }
 
+main strong{
+    color: var(--verde4);
+    font-weight: bold;
+}
+
 main a{
     background-color: var(--verde1);
     color: var(--verde5);
@@ -141,6 +150,28 @@ main img{
     width: 100%;
 }
 
+main img.pequena{
+    margin: auto;
+    max-width: 350px;
+    display: block;
+}
+
+div.video {
+    background-color: var(--verde5);
+    margin: 0px -15px 20px -15px;
+    padding: 20px;
+    padding-bottom: 56%;
+    position: relative;
+}
+
+div.video > iframe{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+}
+
 aside {
     background-color: var(--verde1);
     padding: 10px;
@@ -152,6 +183,14 @@ aside > ul {
     list-style-type: '\00A0\2714\00A0';
     list-style-position: inside;
     columns: 2;
+}
+
+aside > h3{
+    background-color: var(--verde4);
+    color: white;
+    padding: 5px;
+    margin: -10px -10px 0px -10px;
+    border-radius: 10px 10px 0px 0px;
 }
 
 footer {
@@ -171,4 +210,14 @@ footer a{
 footer a:hover{
     color: var(--verde1);
     text-decoration: underline;
+}
+
+p#fim {
+    background-image:linear-gradient(to bottom, var(--verde0), var(--verde2));
+    border-radius: 0px 0px 10px 10px;
+    font-family: var(--fonte_padrao); 
+    font-size: 1.1em; 
+    border-radius: 7px;
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.171);
+    padding: 10px;
 }
