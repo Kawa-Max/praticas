@@ -1,4 +1,7 @@
 import tkinter
+import random
+import PIL.Image
+from PIL import Image, ImageTk
 from tkinter import *
 from tkinter import ttk
 
@@ -7,8 +10,8 @@ co0 = "#FFFFFF"  # white / branca
 co1 = "#333333"  # black / preta
 co2 = "#fcc058"  # orange / laranja
 co3 = "#fff873"  # yellow / amarela
-co4 = "#34eb3d"   # green / verde
-co5 = "#e85151"   # red / vermelha
+co4 = "#34eb3d"  # green / verde
+co5 = "#e85151"  # red / vermelha
 
 fundo = "#3b3b3b"
 
@@ -59,5 +62,87 @@ jg_2_linha.place(x=255, y=0)
 empate_linha = Label(frame_cima, width=255, anchor='center', font=('Ivy 1 bold'), bg=co0, fg=co0)
 empate_linha.place(x=0, y=95)
 
+# FUNÇÕES
+
+global voce
+global pc
+
+ponto_vc = 0
+ponto_pc = 0
+rodadas = 5
+
+
+# função logica
+def jogar(i):
+    global rodadas
+    global ponto_vc
+    global ponto_pc
+
+    if rodadas > 0:
+        print(rodadas)
+        opc = ['Pedra', 'Papel', 'Tesoura']
+        pc = random.choice(opc)
+
+        voce= i
+
+        #IGUAL
+        if voce == 'Pedra' and pc == 'Pedra':
+            print('empate')
+            empate_linha['bg'] = co3
+        if voce == 'Papel' and pc == 'Papel':
+            print('empate')
+            empate_linha['bg'] = co3
+        if voce == 'Tesoura' and pc == 'Tesoura':
+            print('empate')
+            empate_linha['bg'] = co3
+
+        #GANHOU
+        #PERDE
+        #rodadas -= 1
+    else:
+        fim_do_jogo()
+
+
+# função iniciar
+def iniciar_game():
+    global pedra, papel, tesoura
+    global b_pedra, b_papel, b_tesoura
+    #  ----------------------- pedra ---------------------------
+    pedra = PIL.Image.open("imagens/pedra.png")
+    pedra = pedra.resize((50, 50))
+    pedra = ImageTk.PhotoImage(pedra)
+    b_pedra = Button(frame_baixo, command=lambda: jogar('Pedra'), width=50, image=pedra, compound=CENTER, bg=co0,
+                     fg=co0,
+                     font=('Ivy 10 bold'), anchor=CENTER, relief=FLAT)
+    b_pedra.place(x=15, y=60)
+
+    #  ----------------------- papel -------------------------
+    papel = PIL.Image.open('imagens/papel.png')
+    papel = papel.resize((50, 50))
+    papel = ImageTk.PhotoImage(papel)
+    b_papel = Button(frame_baixo, command=lambda: jogar('Papel'), width=50, image=papel, compound=CENTER, bg=co0,
+                     fg=co0,
+                     font=('Ivy 10 bold'), anchor=CENTER, relief=FLAT)
+    b_papel.place(x=100, y=55)
+
+    #  ----------------------- tesoura -----------------------
+    tesoura = PIL.Image.open('imagens/tesoura.png')
+    tesoura = tesoura.resize((50, 50))
+    tesoura = ImageTk.PhotoImage(tesoura)
+    b_tesoura = Button(frame_baixo, command=lambda: jogar('Tesoura'), width=50, image=tesoura, compound=CENTER, bg=co0,
+                       fg=co0, font=('Ivy 10 bold'), anchor=CENTER, relief=FLAT)
+    b_tesoura.place(x=180, y=55)
+
+
+# função terminar
+def fim_do_jogo():
+    pass
+
+
+#  ----------------------- inicio -----------------------
+iniciar = Button(frame_baixo, command=iniciar_game, width=30, text='Pressione', bg=fundo, fg=co0, font=('Ivy 10 bold'),
+                 anchor=CENTER,
+                 relief=RAISED, overrelief=RIDGE)
+iniciar.place(x=5, y=150)
 
 janela.mainloop()
