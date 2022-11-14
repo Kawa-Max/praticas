@@ -89,15 +89,37 @@ def jogar(i):
         if voce == 'Pedra' and pc == 'Pedra':
             print('empate')
             empate_linha['bg'] = co3
-        if voce == 'Papel' and pc == 'Papel':
+            jg_1_linha['bg'] = co0
+            jg_2_linha['bg'] = co0
+        elif voce == 'Papel' and pc == 'Papel':
             print('empate')
             empate_linha['bg'] = co3
-        if voce == 'Tesoura' and pc == 'Tesoura':
+            jg_1_linha['bg'] = co0
+            jg_2_linha['bg'] = co0
+        elif voce == 'Tesoura' and pc == 'Tesoura':
             print('empate')
             empate_linha['bg'] = co3
+            jg_1_linha['bg'] = co0
+            jg_2_linha['bg'] = co0
 
         #GANHOU
+        elif voce == 'Pedra' and pc == 'Tesoura':
+            print('VOCÊ GANHOU')
+            empate_linha['bg'] = co0
+            jg_1_linha['bg'] = co4
+            jg_2_linha['bg'] = co0
+
         #PERDE
+        elif voce == 'Pedra' and pc == 'Papel':
+            print('PC GANHOU')
+            empate_linha['bg'] = co0
+            jg_1_linha['bg'] = co0
+            jg_2_linha['bg'] = co4
+        elif voce == 'Pedra' and pc == 'Papel':
+            print('PC GANHOU')
+            empate_linha['bg'] = co0
+            jg_1_linha['bg'] = co0
+            jg_2_linha['bg'] = co4
         #rodadas -= 1
     else:
         fim_do_jogo()
