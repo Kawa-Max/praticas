@@ -4,6 +4,7 @@ import PIL.Image
 from PIL import Image, ImageTk
 from tkinter import *
 from tkinter import ttk
+from time import sleep
 
 # cores --------------------------------
 co0 = "#FFFFFF"  # white / branca
@@ -62,6 +63,12 @@ jg_2_linha.place(x=255, y=0)
 empate_linha = Label(frame_cima, width=255, anchor='center', font=('Ivy 1 bold'), bg=co0, fg=co0)
 empate_linha.place(x=0, y=95)
 
+jogada_pc = Label(frame_baixo, text='', height=1, anchor='center', font=('Ivy 10 bold'), bg=co0, fg=co1)
+jogada_pc.place(x=190, y=10)
+
+jogada_vc = Label(frame_baixo, text='', height=1, anchor='center', font=('Ivy 10 bold'), bg=co0, fg=co1)
+jogada_vc.place(x=30, y=10)
+
 # FUNÇÕES
 
 global voce
@@ -83,45 +90,51 @@ def jogar(i):
         opc = ['Pedra', 'Papel', 'Tesoura']
         pc = random.choice(opc)
 
-        voce= i
+        voce = i
 
-        #IGUAL
-        if voce == 'Pedra' and pc == 'Pedra':
-            print('empate')
-            empate_linha['bg'] = co3
-            jg_1_linha['bg'] = co0
-            jg_2_linha['bg'] = co0
-        elif voce == 'Papel' and pc == 'Papel':
-            print('empate')
-            empate_linha['bg'] = co3
-            jg_1_linha['bg'] = co0
-            jg_2_linha['bg'] = co0
-        elif voce == 'Tesoura' and pc == 'Tesoura':
+        #  IGUAL
+        if voce == 'Pedra' and pc == 'Pedra' or voce == 'Papel' and pc == 'Papel' or voce == 'Tesoura' and pc == 'Tesoura':
+
             print('empate')
             empate_linha['bg'] = co3
             jg_1_linha['bg'] = co0
             jg_2_linha['bg'] = co0
 
-        #GANHOU
-        elif voce == 'Pedra' and pc == 'Tesoura':
+        #  GANHA
+        elif voce == 'Pedra' and pc == 'Tesoura' or voce == 'Tesoura' and pc == 'Papel' or voce == 'Papel' and pc == 'Pedra':
+
             print('VOCÊ GANHOU')
             empate_linha['bg'] = co0
             jg_1_linha['bg'] = co4
             jg_2_linha['bg'] = co0
 
-        #PERDE
-        elif voce == 'Pedra' and pc == 'Papel':
+            ponto_vc += 10
+
+        #  PERDE
+        elif voce == 'Pedra' and pc == 'Papel' or voce == 'Papel' and pc == 'Tesoura' or voce == 'Tesoura' and pc == 'Pedra':
+
             print('PC GANHOU')
             empate_linha['bg'] = co0
             jg_1_linha['bg'] = co0
             jg_2_linha['bg'] = co4
-        elif voce == 'Pedra' and pc == 'Papel':
-            print('PC GANHOU')
-            empate_linha['bg'] = co0
-            jg_1_linha['bg'] = co0
-            jg_2_linha['bg'] = co4
-        #rodadas -= 1
+
+            ponto_pc += 10
+
+        #  atualizando os pontos
+        jg_1_point['text'] = ponto_vc
+        jg_2_point['text'] = ponto_pc
+
+        #  atualizando as rodadas
+        rodadas -= 1
+
+        jogada_pc['text'] = pc
+        jogada_vc['text'] = voce
+
     else:
+        jg_1_point['text'] = ponto_vc
+        jg_2_point['text'] = ponto_pc
+
+        #  termina o jogo
         fim_do_jogo()
 
 
@@ -129,6 +142,9 @@ def jogar(i):
 def iniciar_game():
     global pedra, papel, tesoura
     global b_pedra, b_papel, b_tesoura
+
+    iniciar.destroy()
+
     #  ----------------------- pedra ---------------------------
     pedra = PIL.Image.open("imagens/pedra.png")
     pedra = pedra.resize((50, 50))
@@ -158,7 +174,44 @@ def iniciar_game():
 
 # função terminar
 def fim_do_jogo():
-    pass
+
+    global rodadas
+    global ponto_vc
+    global ponto_pc
+
+    #  reiniciando as variaveis
+
+    ponto_vc = 0
+    ponto_pc = 0
+    rodadas = 5
+
+    #  destruindo as imagens
+
+    b_pedra.destroy()
+    b_papel.destroy()
+    b_tesoura.destroy()
+
+    #  definindo o vencedor
+
+    jogador_vc = int(jg_1_point['text'])
+    jogador_pc = int(jg_2_point['text'])
+
+    if jogador_vc > jogador_pc:
+
+        vencedor = Label(frame_baixo, text='PARABÉNS, VOCÊ GANHOU !!!', height=1, anchor='center', font=('Ivy 10 bold'), bg=co0, fg=co4)
+        vencedor.place(x=5, y=60)
+    elif jogador_pc > jogador_vc:
+
+        vencedor = Label(frame_baixo, text='INFELIZMENTE, VOCÊ PERDEU !!!', height=1, anchor='center', font=('Ivy 10 bold'), bg=co0, fg=co5)
+        vencedor.place(x=5, y=60)
+
+    else:
+
+        vencedor = Label(frame_baixo, text='FOI UM EMPATE !!!', height=1, anchor='center', font=('Ivy 10 bold'), bg=co0, fg=co3)
+        vencedor.place(x=5, y=60)
+
+
+    print('Acabou o Jogo')
 
 
 #  ----------------------- inicio -----------------------
